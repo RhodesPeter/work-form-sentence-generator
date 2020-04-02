@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     flex-wrap: wrap;
 }
 
@@ -49,6 +49,7 @@
     margin-bottom: 8px;
     width: 100%;
     padding: 4px;
+    border: 2px solid #4347F5;
 }
 
 .words__btn {

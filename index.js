@@ -13,8 +13,6 @@ const addWordToDOMList = (newWord) => {
 const handleAddWord = (event) => {
     event.preventDefault();
 
-    console.log('submited?');
-
     const input = document.querySelector('.words__input');
     const newWord = input.value;
     
