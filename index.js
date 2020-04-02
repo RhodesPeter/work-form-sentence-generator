@@ -2,6 +2,8 @@ const words = ['Charlie', 'Jake', 'Alex'];
 
 const form = document.querySelector('.words__form');
 
+let interval = '';
+
 const addWordToDOMList = (newWord) => {
     const list = document.querySelector('.words__list');
     const newLi = document.createElement('li');
@@ -18,9 +20,13 @@ const handleAddWord = (event) => {
     
     if (newWord.length === 0) return;
 
-    addWordToDOMList(newWord);
     words.push(newWord);
+
+    addWordToDOMList(newWord);
+    clearTimeout(interval);
     generateWords();
+    startCycle();
+
     input.value = '';
 };
 
@@ -50,7 +56,7 @@ const shuffleWords = () => {
 }
 
 const startCycle = () => {
-    setInterval(generateWords, 2000);
+    interval = setInterval(generateWords, 2000);
 };
 
 form.addEventListener('submit', handleAddWord);
