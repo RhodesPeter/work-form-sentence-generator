@@ -1,4 +1,5 @@
 const words = ['Charlie', 'Jake', 'Alex'];
+const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
 const form = document.querySelector('.words__form');
 
@@ -34,14 +35,14 @@ const generateWords = () => {
     const wordOne = document.querySelector('.result__word--1');
     const wordTwo = document.querySelector('.result__word--2');
     const wordThree = document.querySelector('.result__word--4');
-    const newSelectedWords = shuffleWords();
+    const newSelectedWords = shuffleArray(words);
     wordOne.textContent = newSelectedWords[0];
     wordTwo.textContent = `${newSelectedWords[1]},`;
     wordThree.textContent = newSelectedWords[2];
 };
 
-const shuffleWords = () => {
-    const array = [...words];
+const shuffleArray = (arrayToShuffle) => {
+    const array = [...arrayToShuffle];
     let j;
     let i;
 
@@ -55,11 +56,21 @@ const shuffleWords = () => {
     return array;
 }
 
+const generateBackgroundColor = () => {
+    const resultContainer = document.querySelector('.result');
+    const randomNumber = Math.floor(Math.random() * colours.length) + 0;
+    resultContainer.style.backgroundColor = colours[randomNumber];
+}
+
 const startCycle = () => {
-    interval = setInterval(generateWords, 2000);
+    interval = setInterval(() => {
+        generateWords();
+        generateBackgroundColor();
+    }, 2000);
 };
 
 form.addEventListener('submit', handleAddWord);
 
-generateWords();
+generateWords(words);
+generateBackgroundColor();
 startCycle();
