@@ -15,15 +15,15 @@
 
 .result {
     color: white;
-    padding: 24px;
-    width: 300px;
-    height: 300px;
     font-size: 48px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    margin: 24px;
+    width: 300px;
+    height: 300px;
 }
 
 .result__word {
@@ -57,7 +57,8 @@
 }
 
 .words__btn,
-.colours__btn {
+.colours__btn,
+.word-generator__capture-gif {
     color: white;
     padding: 8px;
     border-radius: 3px;

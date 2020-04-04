@@ -1,0 +1,15 @@
+{
+  "name": "sentence-generator",
+  "version": "1.0.0",
+  "description": "Sentence generator which creates an animated gif",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RhodesPeter/work-form-sentence-generator.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -3,6 +3,7 @@ const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
 const wordsForm = document.querySelector('.words__form');
 const coloursForm = document.querySelector('.colours__form');
+const captureGifBtn = document.querySelector('.word-generator__capture-gif');
 
 let interval = '';
 
@@ -96,8 +97,14 @@ const startCycle = () => {
     }, 2000);
 };
 
+const captureScreenshot = () => {
+    console.log('capture png');
+    // const png = canvas.toDataURL('png');
+};
+
 wordsForm.addEventListener('submit', handleAddWord);
 coloursForm.addEventListener('submit', handleAddColour);
+captureGifBtn.addEventListener('click', captureScreenshot);
 
 generateWords();
 generateBackgroundColor();
