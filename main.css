@@ -30,20 +30,25 @@
     display: block;
 }
 
-.words {
-    padding: 20px;
+.words,
+.colours {
+    margin: 20px;
 }
 
-.words__title {
+.words__title,
+.colours__title {
     font-size: 22px;
     margin-bottom: 8px;
 }
 
-.words__list-item {
+.words__list-item,
+.colours__list-item {
     list-style-position: inside;
+    font-size: 14px;
 }
 
-.words__input {
+.words__input,
+.colours__input {
     margin-top: 8px;
     margin-bottom: 8px;
     width: 100%;
@@ -51,7 +56,8 @@
     border: 2px solid #4347F5;
 }
 
-.words__btn {
+.words__btn,
+.colours__btn {
     color: white;
     padding: 8px;
     border-radius: 3px;
