@@ -1,7 +1,8 @@
 const words = ['Charlie', 'Jake', 'Alex'];
 const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
-const form = document.querySelector('.words__form');
+const wordsForm = document.querySelector('.words__form');
+const coloursForm = document.querySelector('.colours__form');
 
 let interval = '';
 
@@ -13,13 +14,21 @@ const addWordToDOMList = (newWord) => {
     list.appendChild(newLi);
 };
 
+const addColourToDOMList = (newColour) => {
+    const list = document.querySelector('.colours__list');
+    const newLi = document.createElement('li');
+    newLi.classList.add('colours__list-item');
+    newLi.textContent = newColour;
+    list.appendChild(newLi);
+}
+
 const handleAddWord = (event) => {
     event.preventDefault();
 
     const input = document.querySelector('.words__input');
     const newWord = input.value;
     
-    if (newWord.length === 0) return;
+    if (newWord.trim().length === 0) return;
 
     words.push(newWord);
 
@@ -30,6 +39,24 @@ const handleAddWord = (event) => {
 
     input.value = '';
 };
+
+const handleAddColour = () => {
+    event.preventDefault();
+
+    const input = document.querySelector('.colours__input');
+    const newColour = input.value;
+    
+    if (newColour.trim().length === 0) return;
+
+    colours.push(newColour);
+
+    addColourToDOMList(newColour);
+    clearTimeout(interval);
+    generateBackgroundColor();
+    startCycle();
+
+    input.value = '';
+}
 
 const generateWords = () => {
     const wordOne = document.querySelector('.result__word--1');
@@ -69,8 +96,9 @@ const startCycle = () => {
     }, 2000);
 };
 
-form.addEventListener('submit', handleAddWord);
+wordsForm.addEventListener('submit', handleAddWord);
+coloursForm.addEventListener('submit', handleAddColour);
 
-generateWords(words);
+generateWords();
 generateBackgroundColor();
 startCycle();
