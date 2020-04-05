@@ -98,8 +98,9 @@ const startCycle = () => {
 };
 
 const captureScreenshot = () => {
-    console.log('capture png');
-    // const png = canvas.toDataURL('png');
+    const canvas = document.querySelector('.canvas');
+    const png = canvas.toDataURL('png');
+    console.log(png);
 };
 
 wordsForm.addEventListener('submit', handleAddWord);
@@ -109,3 +110,35 @@ captureGifBtn.addEventListener('click', captureScreenshot);
 generateWords();
 generateBackgroundColor();
 startCycle();
+
+const addCanvas = () => {
+    document.body.insertAdjacentHTML(
+        'afterbegin',
+        `<canvas class="canvas" width="300" height="300"></canvas>`
+    );
+
+    const result = document.querySelector('.result-wrapper');
+    const canvas = document.querySelector('.canvas');
+    const ctx = canvas.getContext('2d');
+
+    const data = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+            <foreignObject width="100%" height="100%">
+                <div xmlns="http://www.w3.org/1999/xhtml">
+                    ${result.innerHTML}
+                </div>
+            </foreignObject>
+        </svg>
+    `;
+
+    const tempImg = document.createElement('img')
+    tempImg.src = 'data:image/svg+xml,' + encodeURIComponent(data);
+    
+    tempImg.addEventListener('load', e => onTempImageLoad(e, ctx))
+}
+
+const onTempImageLoad = (e, ctx) => {
+    ctx.drawImage(e.target, 0, 0)
+}
+
+addCanvas();
