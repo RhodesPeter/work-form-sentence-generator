@@ -13,9 +13,15 @@
     flex-wrap: wrap;
 }
 
-.result-wrapper {
-    margin: 24px;
+.word-generator__controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
+/* .result-wrapper {
+    margin: 24px;
+} */
 
 .canvas {
     display: none;
@@ -41,6 +47,8 @@
 .words,
 .colours {
     margin: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .words__title,
@@ -64,6 +72,11 @@
     border: 2px solid #4347F5;
 }
 
+.words__form,
+.colours__form {
+    margin: auto 0 0;
+}
+
 .words__btn,
 .colours__btn,
 .word-generator__capture-gif {
@@ -72,4 +85,9 @@
     border-radius: 3px;
     border: 0;
     background-image: linear-gradient(#4347F5, #4247F5);
+}
+
+.word-generator__capture-gif {
+    margin: 24px 18px;
+    align-self: flex-end;
 }

@@ -1,4 +1,4 @@
-const words = ['Charlie', 'Jake', 'Alex'];
+const words = ['Charlie', 'Jake', 'Alex', 'work-form'];
 const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
 const wordsForm = document.querySelector('.words__form');
@@ -112,20 +112,29 @@ generateBackgroundColor();
 startCycle();
 
 const addCanvas = () => {
+    // might we want this width and height to be dynamic?
+    // we will need to also remove this canvas element if this func is run more than once.
     document.body.insertAdjacentHTML(
         'afterbegin',
-        `<canvas class="canvas" width="300" height="300"></canvas>`
+        `<canvas class="canvas"></canvas>`
     );
 
-    const result = document.querySelector('.result-wrapper');
+    const resultWrapper = document.querySelector('.result-wrapper');
+    const result = document.querySelector('.result');
     const canvas = document.querySelector('.canvas');
     const ctx = canvas.getContext('2d');
 
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    result.style.height = '100vh';
+    result.style.width = '100vw';
+
     const data = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+        <svg xmlns="http://www.w3.org/2000/svg">
             <foreignObject width="100%" height="100%">
                 <div xmlns="http://www.w3.org/1999/xhtml">
-                    ${result.innerHTML}
+                    ${resultWrapper.innerHTML}
                 </div>
             </foreignObject>
         </svg>
