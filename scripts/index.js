@@ -4,6 +4,8 @@ const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 const wordsForm = document.querySelector('.words__form');
 const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.word-generator__capture-gif');
+const range = document.querySelector('.slider');
+let imageChange = range.value; // 2000 milliseconds default (2 seconds)
 
 let interval = '';
 
@@ -96,19 +98,14 @@ const startCycle = () => {
         generateWords();
         generateBackgroundColor();
         updateCanvas();
-    }, 2000);
+    }, imageChange);
 };
 
-const captureScreenshot = () => {
-    const canvas = document.querySelector('.canvas');
-    // const png = canvas.toDataURL('png'); @TODO if not using this method then I might be able to remake lots of things
-    // console.log(png);
-    makeGif(canvas);
+const handleRangeChange = (event) => {
+    imageChange = event.target.value;
+    clearTimeout(interval);
+    startCycle();
 };
-
-wordsForm.addEventListener('submit', handleAddWord);
-coloursForm.addEventListener('submit', handleAddColour);
-captureGifBtn.addEventListener('click', captureScreenshot);
 
 const updateCanvas = () => {
     const resultWrapper = document.querySelector('.result-wrapper');
@@ -135,29 +132,27 @@ const updateCanvas = () => {
     const tempImg = document.createElement('img')
     tempImg.src = 'data:image/svg+xml,' + encodeURIComponent(data);
     
-    tempImg.addEventListener('load', e => onTempImageLoad(e, ctx))
+    tempImg.addEventListener('load', e => ctx.drawImage(e.target, 0, 0))
 }
 
-const onTempImageLoad = (e, ctx) => {
-    ctx.drawImage(e.target, 0, 0)
-}
-
-const makeGif = (canvas) => {    
+const makeGif = () => {  
+    const canvas = document.querySelector('.canvas');
+  
     const gif = new GIF({
         workers: 2,
         quality: 10,
         workerScript: 'scripts/gif.worker.js',
     });
 
-    gif.addFrame(canvas, {delay: 2000, copy: true});
+    gif.addFrame(canvas, {delay: imageChange, copy: true});
 
     for(let i = 1; i <= 4; i++){
         setTimeout(() => {
-            gif.addFrame(canvas, {delay: 2000, copy: true});
-        }, i * 2000);
+            gif.addFrame(canvas, {delay: imageChange, copy: true});
+        }, i * imageChange);
     }
 
-    setTimeout(() => gif.render(), 10000);
+    setTimeout(() => gif.render(), imageChange * 5);
 
     // This is the progress of turning it into a gif after gif.render()
     gif.on('progress', function(p) {
@@ -187,6 +182,11 @@ document.body.insertAdjacentHTML(
     'afterbegin',
     `<canvas class="canvas"></canvas>`
 );
+
+wordsForm.addEventListener('submit', handleAddWord);
+coloursForm.addEventListener('submit', handleAddColour);
+captureGifBtn.addEventListener('click', makeGif);
+range.addEventListener('change', handleRangeChange);
 
 generateWords();
 generateBackgroundColor();
