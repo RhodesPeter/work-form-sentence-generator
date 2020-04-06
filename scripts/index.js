@@ -73,6 +73,7 @@ const shuffleArray = (arrayToShuffle) => {
     const array = [...arrayToShuffle];
     let j;
     let i;
+    let x;
 
     for (i = array.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
@@ -94,31 +95,22 @@ const startCycle = () => {
     interval = setInterval(() => {
         generateWords();
         generateBackgroundColor();
+        updateCanvas();
     }, 2000);
 };
 
 const captureScreenshot = () => {
     const canvas = document.querySelector('.canvas');
-    const png = canvas.toDataURL('png');
-    console.log(png);
+    // const png = canvas.toDataURL('png'); @TODO if not using this method then I might be able to remake lots of things
+    // console.log(png);
+    makeGif(canvas);
 };
 
 wordsForm.addEventListener('submit', handleAddWord);
 coloursForm.addEventListener('submit', handleAddColour);
 captureGifBtn.addEventListener('click', captureScreenshot);
 
-generateWords();
-generateBackgroundColor();
-startCycle();
-
-const addCanvas = () => {
-    // might we want this width and height to be dynamic?
-    // we will need to also remove this canvas element if this func is run more than once.
-    document.body.insertAdjacentHTML(
-        'afterbegin',
-        `<canvas class="canvas"></canvas>`
-    );
-
+const updateCanvas = () => {
     const resultWrapper = document.querySelector('.result-wrapper');
     const result = document.querySelector('.result');
     const canvas = document.querySelector('.canvas');
@@ -150,4 +142,53 @@ const onTempImageLoad = (e, ctx) => {
     ctx.drawImage(e.target, 0, 0)
 }
 
-addCanvas();
+const makeGif = (canvas) => {    
+    const gif = new GIF({
+        workers: 2,
+        quality: 10,
+        workerScript: 'scripts/gif.worker.js',
+    });
+
+    gif.addFrame(canvas, {delay: 2000, copy: true});
+
+    for(let i = 1; i <= 4; i++){
+        setTimeout(() => {
+            gif.addFrame(canvas, {delay: 2000, copy: true});
+        }, i * 2000);
+    }
+
+    setTimeout(() => gif.render(), 10000);
+
+    // This is the progress of turning it into a gif after gif.render()
+    gif.on('progress', function(p) {
+        console.log(`rendering: ${Math.round(p * 100)}%`);
+    });
+    
+    gif.on('finished', function(blob) {
+    //    saveData(URL.createObjectURL(blob));
+       window.open(URL.createObjectURL(blob));
+    });      
+};
+
+const saveData = (url) => {
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    a.download = 'work-form-sentence-generator';
+    a.click();
+    window.URL.revokeObjectURL(url);
+};
+
+// Can this just be in the HTML, ot should this be somewhere else, or in a func? init func?
+// might we want this width and height to be dynamic?
+// we will need to also remove this canvas element if this func is run more than once.
+document.body.insertAdjacentHTML(
+    'afterbegin',
+    `<canvas class="canvas"></canvas>`
+);
+
+generateWords();
+generateBackgroundColor();
+startCycle();
+updateCanvas();
