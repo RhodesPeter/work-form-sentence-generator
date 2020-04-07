@@ -3,7 +3,7 @@ const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
 const wordsForm = document.querySelector('.words__form');
 const coloursForm = document.querySelector('.colours__form');
-const captureGifBtn = document.querySelector('.word-generator__capture-gif');
+const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
 
