@@ -6,6 +6,8 @@ const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
+const captureCount = document.querySelector('.capture__count');
+const renderCount = document.querySelector('.capture__render-count');
 
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
 let imageCount = imageCountRange.value;
@@ -151,16 +153,20 @@ const updateCanvas = () => {
 
 const makeGif = () => {  
     const canvas = document.querySelector('.canvas');
-  
+
     const gif = new GIF({
         workers: 2,
         quality: 10,
         workerScript: 'scripts/gif.worker.js',
     });
 
+    captureCount.textContent = '';
+    renderCount.textContent = '';
+
     for(let i = 0; i < imageCount; i++){
         setTimeout(() => {
             gif.addFrame(canvas, {delay: imageChange, copy: true});
+            captureCount.textContent = `Frames captured: ${i + 1}`
         }, i * imageChange);
     }
 
@@ -168,7 +174,7 @@ const makeGif = () => {
 
     // This is the progress of turning it into a gif after gif.render()
     gif.on('progress', function(p) {
-        console.log(`rendering: ${Math.round(p * 100)}%`);
+        renderCount.textContent = `Rendering: ${Math.round(p * 100)}%`
     });
     
     gif.on('finished', function(blob) {
