@@ -29,6 +29,7 @@
     margin: 20px;
     display: flex;
     flex-direction: column;
+    width: 220px;
 }
 
 .words__title,
@@ -105,4 +106,9 @@
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
+}
+
+.speed__text {
+    margin-top: 12px;
+    font-size: 14px;
 }

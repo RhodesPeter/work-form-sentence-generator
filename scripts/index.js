@@ -102,7 +102,11 @@ const startCycle = () => {
 };
 
 const handleRangeChange = (event) => {
-    imageChange = event.target.value;
+    const secondsElement = document.querySelector('.speed__seconds');
+    const rangeValue = event.target.value;
+
+    secondsElement.textContent = rangeValue / 1000;
+    imageChange = rangeValue;
     clearTimeout(interval);
     startCycle();
 };
