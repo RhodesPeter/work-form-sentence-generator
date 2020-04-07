@@ -12,6 +12,7 @@ const renderCount = document.querySelector('.capture__render-count');
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
 let imageCount = imageCountRange.value;
 let interval = '';
+let previousColor = '';
 
 const addWordToDOMList = (newWord) => {
     const list = document.querySelector('.words__list');
@@ -91,10 +92,20 @@ const shuffleArray = (arrayToShuffle) => {
     return array;
 }
 
+const getRandomNum = (array) => {
+    return Math.floor(Math.random() * array.length) + 0;
+}
+
 const generateBackgroundColor = () => {
     const resultContainer = document.querySelector('.result');
-    const randomNumber = Math.floor(Math.random() * colours.length) + 0;
-    resultContainer.style.backgroundColor = colours[randomNumber];
+    let nextColor = colours[getRandomNum(colours)];
+    
+    while (nextColor === previousColor) {
+        nextColor = colours[getRandomNum(colours)];
+    }
+
+    resultContainer.style.backgroundColor = nextColor;
+    previousColor = nextColor;
 }
 
 const startCycle = () => {
