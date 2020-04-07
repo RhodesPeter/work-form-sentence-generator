@@ -51,8 +51,12 @@
             <div class="speed">
                 <h1 class="speed__title">Speed:</h1>
                 <!-- 0.1 seconds to 10 seconds -->
-                <input type="range" min="500" max="10000" step="500" value="2000" class="slider">
+                <input type="range" min="500" max="10000" step="500" value="2000" class="slider slider--speed">
                 <p class="speed__text">Images change every <span class="speed__seconds">2</span> seconds</p>
+                
+                <h1 class="image-count__title">Images per gif:</h1>
+                <input type="range" min="1" max="10" step="1" value="3" class="slider slider--image-count">
+                <p class="image-count__text">Gif made up of <span class="image-count__number">3</span> images</p>
             </div>
         </div>
         <button class="word-generator__capture-gif" type="button">Capture gif</button>

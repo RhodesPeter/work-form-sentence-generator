@@ -34,7 +34,8 @@
 
 .words__title,
 .colours__title,
-.speed__title {
+.speed__title,
+.image-count__title {
     font-size: 22px;
     margin-bottom: 8px;
 }
@@ -108,7 +109,9 @@
     cursor: pointer;
 }
 
-.speed__text {
+.speed__text,
+.image-count__text {
     margin-top: 12px;
+    margin-bottom: 22px;
     font-size: 14px;
 }

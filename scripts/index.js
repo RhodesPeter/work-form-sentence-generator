@@ -4,9 +4,11 @@ const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 const wordsForm = document.querySelector('.words__form');
 const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.word-generator__capture-gif');
-const range = document.querySelector('.slider');
-let imageChange = range.value; // 2000 milliseconds default (2 seconds)
+const speedRange = document.querySelector('.slider--speed');
+const imageCountRange = document.querySelector('.slider--image-count');
 
+let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
+let imageCount = imageCountRange.value;
 let interval = '';
 
 const addWordToDOMList = (newWord) => {
@@ -111,6 +113,14 @@ const handleRangeChange = (event) => {
     startCycle();
 };
 
+const handleImageCountChange = (event) => {
+    const imageCountText = document.querySelector('.image-count__number');
+    const imageCountValue = event.target.value;
+
+    imageCount = imageCountValue;
+    imageCountText.textContent = imageCountValue;
+};
+
 const updateCanvas = () => {
     const resultWrapper = document.querySelector('.result-wrapper');
     const result = document.querySelector('.result');
@@ -148,15 +158,13 @@ const makeGif = () => {
         workerScript: 'scripts/gif.worker.js',
     });
 
-    gif.addFrame(canvas, {delay: imageChange, copy: true});
-
-    for(let i = 1; i <= 4; i++){
+    for(let i = 0; i < imageCount; i++){
         setTimeout(() => {
             gif.addFrame(canvas, {delay: imageChange, copy: true});
         }, i * imageChange);
     }
 
-    setTimeout(() => gif.render(), imageChange * 5);
+    setTimeout(() => gif.render(), imageChange * imageCount);
 
     // This is the progress of turning it into a gif after gif.render()
     gif.on('progress', function(p) {
@@ -190,7 +198,8 @@ document.body.insertAdjacentHTML(
 wordsForm.addEventListener('submit', handleAddWord);
 coloursForm.addEventListener('submit', handleAddColour);
 captureGifBtn.addEventListener('click', makeGif);
-range.addEventListener('change', handleRangeChange);
+speedRange.addEventListener('change', handleRangeChange);
+imageCountRange.addEventListener('change', handleImageCountChange);
 
 generateWords();
 generateBackgroundColor();
