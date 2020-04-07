@@ -107,7 +107,7 @@ const handleRangeChange = (event) => {
     const secondsElement = document.querySelector('.speed__seconds');
     const rangeValue = event.target.value;
 
-    secondsElement.textContent = rangeValue / 1000;
+    secondsElement.textContent = `${rangeValue / 1000} second${rangeValue === '1000' ? '' : 's'}`;
     imageChange = rangeValue;
     clearTimeout(interval);
     startCycle();
@@ -118,7 +118,7 @@ const handleImageCountChange = (event) => {
     const imageCountValue = event.target.value;
 
     imageCount = imageCountValue;
-    imageCountText.textContent = imageCountValue;
+    imageCountText.textContent = `${imageCountValue} image${imageCountValue === '1' ? '' : 's'}`;
 };
 
 const updateCanvas = () => {
