@@ -151,6 +151,16 @@ const updateCanvas = () => {
     tempImg.addEventListener('load', e => ctx.drawImage(e.target, 0, 0))
 }
 
+const resetCaptureControls = () => {
+    captureCount.textContent = '';
+    renderCount.textContent = '';
+
+    [...document.querySelectorAll('.acquire-gif-link')].forEach(link => {
+        link.classList.add('acquire-gif-link--disabled');
+        link.href = '';
+    })
+}
+
 const makeGif = () => {  
     const canvas = document.querySelector('.canvas');
 
@@ -160,8 +170,7 @@ const makeGif = () => {
         workerScript: 'scripts/gif.worker.js',
     });
 
-    captureCount.textContent = '';
-    renderCount.textContent = '';
+    resetCaptureControls();
 
     for(let i = 0; i < imageCount; i++){
         setTimeout(() => {
@@ -178,19 +187,16 @@ const makeGif = () => {
     });
     
     gif.on('finished', function(blob) {
-    //    saveData(URL.createObjectURL(blob));
-       window.open(URL.createObjectURL(blob));
-    });      
-};
+        const downloadLink = document.querySelector('.js-download-link');
+        const viewLink = document.querySelector('.js-view-link');
 
-const saveData = (url) => {
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.style = 'display: none';
-    a.href = url;
-    a.download = 'work-form-sentence-generator';
-    a.click();
-    window.URL.revokeObjectURL(url);
+        [downloadLink, viewLink].forEach(link => {
+            link.classList.remove('acquire-gif-link--disabled');
+        })
+
+        viewLink.href = URL.createObjectURL(blob);
+        downloadLink.href = URL.createObjectURL(blob);
+    });      
 };
 
 // Can this just be in the HTML, ot should this be somewhere else, or in a func? init func?
