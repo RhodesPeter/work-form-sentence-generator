@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -158,6 +162,9 @@
     text-align: center;
     animation: bounce 3s;
     opacity: 0;
+    text-decoration: none;
+    color: black;
+    pointer-events: none;
 }
 
 .capture__acquire-wrapper {
@@ -169,6 +176,7 @@
     0%   { 
         transform: translateY(0) ;
         opacity: 1;
+        pointer-events: all;
     }
     20%  { transform: translateY(12px); }
     40%  { transform: translateY(0); }
@@ -176,6 +184,7 @@
     80%  { opacity: 1;    }
     100% { 
         transform: translateY(0);
+        pointer-events: all;
     }
 }
 
