@@ -66,9 +66,26 @@ var myBundle = (function (exports) {
         '#65E7C6'
     ];
 
+    // This can be combined with the 2 functions below
     const preloadPeopleWords = () => {
-        const list = document.querySelector('.words__list');
+        const list = document.querySelector('.words__list--1');
         const listItems = people.map(word => `<li class="words__list-item">${word}</li>`);
+
+        list.innerHTML = '';
+        list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+    };
+
+    const preloadPlaceWords = () => {
+        const list = document.querySelector('.words__list--2');
+        const listItems = places.map(word => `<li class="words__list-item">${word}</li>`);
+
+        list.innerHTML = '';
+        list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+    };
+
+    const preloadLocationWords = () => {
+        const list = document.querySelector('.words__list--3');
+        const listItems = locations.map(word => `<li class="words__list-item">${word}</li>`);
 
         list.innerHTML = '';
         list.insertAdjacentHTML('afterbegin', listItems.join(', '));
@@ -122,12 +139,11 @@ var myBundle = (function (exports) {
         });      
     };
 
-    const wordsForm = document.querySelector('.words__form');
+    const wordForms = document.querySelectorAll('.words__form');
     const coloursForm = document.querySelector('.colours__form');
     const captureGifBtn = document.querySelector('.capture__btn');
     const speedRange = document.querySelector('.slider--speed');
     const imageCountRange = document.querySelector('.slider--image-count');
-    const renderCount = document.querySelector('.capture__render-count');
 
     exports.imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
     exports.imageCount = imageCountRange.value;
@@ -137,14 +153,24 @@ var myBundle = (function (exports) {
     const handleAddWord = (event) => {
         event.preventDefault();
 
-        const input = document.querySelector('.words__input');
+        const form = event.target;
+        const input = form.querySelector('.words__input');
         const newWord = input.value;
-        
+        const formName = form.name;
+
         if (newWord.trim().length === 0) return;
 
-        people.push(newWord);
-
-        preloadPeopleWords();
+        if (formName === 'people') {
+            people.push(newWord);
+            preloadPeopleWords();
+        } else if (formName === 'places') {
+            places.push(newWord);
+            preloadPlaceWords();
+        } else {
+            locations.push(newWord);
+            preloadLocationWords();
+        }
+        
         clearTimeout(interval);
         generateWords();
         startCycle();
@@ -250,6 +276,7 @@ var myBundle = (function (exports) {
 
     const resetCaptureControls = () => {
         const captureCount = document.querySelector('.capture__count');
+        const renderCount = document.querySelector('.capture__render-count');
 
         captureCount.textContent = '';
         renderCount.textContent = '';
@@ -260,22 +287,20 @@ var myBundle = (function (exports) {
         });
     };
 
-    // Can this just be in the HTML, or should this be somewhere else, or in a func? init func?
-    // might we want this width and height to be dynamic?
-    // we will need to also remove this canvas element if this func is run more than once.
-    document.body.insertAdjacentHTML(
-        'afterbegin',
-        `<canvas class="canvas"></canvas>`
-    );
+    const preloadAllWords = () => {
+        preloadPeopleWords();
+        preloadColourWords();
+        preloadPlaceWords();
+        preloadLocationWords();
+    };
 
-    wordsForm.addEventListener('submit', handleAddWord);
+    [...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
     coloursForm.addEventListener('submit', handleAddColour);
     captureGifBtn.addEventListener('click', makeGif);
     speedRange.addEventListener('change', handleRangeChange);
     imageCountRange.addEventListener('change', handleImageCountChange);
 
-    preloadPeopleWords();
-    preloadColourWords();
+    preloadAllWords();
     generateWords();
     generateBackgroundColor();
     startCycle();

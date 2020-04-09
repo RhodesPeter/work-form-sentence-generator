@@ -1,14 +1,18 @@
-import { preloadPeopleWords, preloadColourWords } from './preload-words';
+import { 
+    preloadPeopleWords,
+    preloadPlaceWords,
+    preloadColourWords,
+    preloadLocationWords
+} from './preload-words';
 import { people, places, locations } from './words';
 import colours from './colours';
 import makeGif from './make-gif';
 
-const wordsForm = document.querySelector('.words__form');
+const wordForms = document.querySelectorAll('.words__form');
 const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
-const renderCount = document.querySelector('.capture__render-count');
 
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
 let imageCount = imageCountRange.value;
@@ -18,14 +22,24 @@ let previousColor = '';
 const handleAddWord = (event) => {
     event.preventDefault();
 
-    const input = document.querySelector('.words__input');
+    const form = event.target;
+    const input = form.querySelector('.words__input');
     const newWord = input.value;
-    
+    const formName = form.name;
+
     if (newWord.trim().length === 0) return;
 
-    people.push(newWord);
-
-    preloadPeopleWords();
+    if (formName === 'people') {
+        people.push(newWord);
+        preloadPeopleWords();
+    } else if (formName === 'places') {
+        places.push(newWord);
+        preloadPlaceWords();
+    } else {
+        locations.push(newWord);
+        preloadLocationWords();
+    }
+    
     clearTimeout(interval);
     generateWords();
     startCycle();
@@ -131,6 +145,7 @@ const updateCanvas = () => {
 
 const resetCaptureControls = () => {
     const captureCount = document.querySelector('.capture__count');
+    const renderCount = document.querySelector('.capture__render-count');
 
     captureCount.textContent = '';
     renderCount.textContent = '';
@@ -141,22 +156,20 @@ const resetCaptureControls = () => {
     })
 }
 
-// Can this just be in the HTML, or should this be somewhere else, or in a func? init func?
-// might we want this width and height to be dynamic?
-// we will need to also remove this canvas element if this func is run more than once.
-document.body.insertAdjacentHTML(
-    'afterbegin',
-    `<canvas class="canvas"></canvas>`
-);
+const preloadAllWords = () => {
+    preloadPeopleWords();
+    preloadColourWords();
+    preloadPlaceWords();
+    preloadLocationWords();
+};
 
-wordsForm.addEventListener('submit', handleAddWord);
+[...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
 coloursForm.addEventListener('submit', handleAddColour);
 captureGifBtn.addEventListener('click', makeGif);
 speedRange.addEventListener('change', handleRangeChange);
 imageCountRange.addEventListener('change', handleImageCountChange);
 
-preloadPeopleWords();
-preloadColourWords();
+preloadAllWords();
 generateWords();
 generateBackgroundColor();
 startCycle();

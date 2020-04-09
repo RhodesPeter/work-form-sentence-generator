@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <canvas class="canvas"></canvas>
     <div class="word-generator">
         <div class="result-wrapper">
             <!-- Styles added as attributes for html to canvas functionality -->
@@ -23,32 +24,32 @@
         <div class="word-generator__controls" id="bottom">
             <div class="words">
                 <h1 class="words__title">Line 1 words:</h1>
-                <ul class="words__list">
+                <ul class="words__list words__list--1">
                     <!-- Loaded by JS -->
                 </ul>
-                <form class="words__form">
+                <form class="words__form" name="people">
                     <input class="words__input" type="text">
-                    <button type="submit" class="words__btn">Add word</button>
+                    <button type="submit" class="words__btn words__btn--1">Add word</button>
                 </form>
             </div>
             <div class="words">
                 <h1 class="words__title">Line 2 words:</h1>
-                <ul class="words__list">
+                <ul class="words__list words__list--2">
                     <!-- Loaded by JS -->
                 </ul>
-                <form class="words__form">
+                <form class="words__form" name="places">
                     <input class="words__input" type="text">
-                    <button type="submit" class="words__btn">Add word</button>
+                    <button type="submit" class="words__btn words__btn--2">Add word</button>
                 </form>
             </div>
             <div class="words">
                 <h1 class="words__title">Line 3 words:</h1>
-                <ul class="words__list">
+                <ul class="words__list words__list--3">
                     <!-- Loaded by JS -->
                 </ul>
-                <form class="words__form">
+                <form class="words__form" name="locations">
                     <input class="words__input" type="text">
-                    <button type="submit" class="words__btn">Add word</button>
+                    <button type="submit" class="words__btn words__btn--3">Add word</button>
                 </form>
             </div>
             <div class="colours">
