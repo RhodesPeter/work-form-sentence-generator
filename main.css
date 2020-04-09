@@ -65,8 +65,7 @@ html {
     margin-bottom: 8px;
 }
 
-.words__list-item,
-.colours__list-item {
+.word-generator__list-item {
     list-style-position: inside;
     font-size: 14px;
     display: inline-block;
