@@ -98,9 +98,6 @@ var myBundle = (function (exports) {
         });      
     };
 
-    console.log(people, places, locations);
-
-    const words = ['Charlie', 'Jake', 'Alex', 'work-form'];
     const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
     const wordsForm = document.querySelector('.words__form');
@@ -167,34 +164,16 @@ var myBundle = (function (exports) {
         input.value = '';
     };
 
+    const getRandomNum = array => Math.floor(Math.random() * array.length) + 0;
+
     const generateWords = () => {
         const wordOne = document.querySelector('.result__word--1');
         const wordTwo = document.querySelector('.result__word--2');
         const wordThree = document.querySelector('.result__word--4');
-        const newSelectedWords = shuffleArray(words);
-        wordOne.textContent = newSelectedWords[0];
-        wordTwo.textContent = `${newSelectedWords[1]},`;
-        wordThree.textContent = newSelectedWords[2];
-    };
-
-    const shuffleArray = (arrayToShuffle) => {
-        const array = [...arrayToShuffle];
-        let j;
-        let i;
-        let x;
-
-        for (i = array.length - 1; i > 0; i--) {
-            j = Math.floor(Math.random() * (i + 1));
-            x = array[i];
-            array[i] = array[j];
-            array[j] = x;
-        }
-
-        return array;
-    };
-
-    const getRandomNum = (array) => {
-        return Math.floor(Math.random() * array.length) + 0;
+        
+        wordOne.textContent = `${people[getRandomNum(people)]},`;
+        wordTwo.textContent = places[getRandomNum(places)];
+        wordThree.textContent = `the ${locations[getRandomNum(locations)]}`;
     };
 
     const generateBackgroundColor = () => {
