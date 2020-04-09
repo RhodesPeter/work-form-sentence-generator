@@ -1,3 +1,8 @@
+import { people, places, locations } from './words';
+import makeGif from './make-gif';
+
+console.log(people, places, locations);
+
 const words = ['Charlie', 'Jake', 'Alex', 'work-form'];
 const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
@@ -6,7 +11,6 @@ const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
-const captureCount = document.querySelector('.capture__count');
 const renderCount = document.querySelector('.capture__render-count');
 
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
@@ -163,6 +167,8 @@ const updateCanvas = () => {
 }
 
 const resetCaptureControls = () => {
+    const captureCount = document.querySelector('.capture__count');
+
     captureCount.textContent = '';
     renderCount.textContent = '';
 
@@ -172,45 +178,7 @@ const resetCaptureControls = () => {
     })
 }
 
-const makeGif = () => {  
-    const canvas = document.querySelector('.canvas');
-
-    const gif = new GIF({
-        workers: 2,
-        quality: 10,
-        workerScript: 'scripts/gif.worker.js',
-    });
-
-    resetCaptureControls();
-
-    for(let i = 0; i < imageCount; i++){
-        setTimeout(() => {
-            gif.addFrame(canvas, {delay: imageChange, copy: true});
-            captureCount.textContent = `Frames captured: ${i + 1}`
-        }, i * imageChange);
-    }
-
-    setTimeout(() => gif.render(), imageChange * imageCount);
-
-    // This is the progress of turning it into a gif after gif.render()
-    gif.on('progress', function(p) {
-        renderCount.textContent = `Rendering: ${Math.round(p * 100)}%`
-    });
-    
-    gif.on('finished', function(blob) {
-        const downloadLink = document.querySelector('.js-download-link');
-        const viewLink = document.querySelector('.js-view-link');
-
-        [downloadLink, viewLink].forEach(link => {
-            link.classList.remove('acquire-gif-link--disabled');
-        })
-
-        viewLink.href = URL.createObjectURL(blob);
-        downloadLink.href = URL.createObjectURL(blob);
-    });      
-};
-
-// Can this just be in the HTML, ot should this be somewhere else, or in a func? init func?
+// Can this just be in the HTML, or should this be somewhere else, or in a func? init func?
 // might we want this width and height to be dynamic?
 // we will need to also remove this canvas element if this func is run more than once.
 document.body.insertAdjacentHTML(
@@ -228,3 +196,5 @@ generateWords();
 generateBackgroundColor();
 startCycle();
 updateCanvas();
+
+export { resetCaptureControls, imageCount, imageChange }
