@@ -51,6 +51,7 @@ html {
 .colours__list-item {
     list-style-position: inside;
     font-size: 14px;
+    display: inline-block;
 }
 
 .words__input,

@@ -58,6 +58,30 @@ var myBundle = (function (exports) {
         'Home'
     ];
 
+    const colours = [
+        '#4347F5',
+        '#E77B65',
+        '#E7658E',
+        '#FFC300',
+        '#65E7C6'
+    ];
+
+    const preloadPeopleWords = () => {
+        const list = document.querySelector('.words__list');
+        const listItems = people.map(word => `<li class="words__list-item">${word}</li>`);
+
+        list.innerHTML = '';
+        list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+    };
+
+    const preloadColourWords = () => {
+        const list = document.querySelector('.colours__list');
+        const listItems = colours.map(color => `<li class="colours__list-item">${color}</li>`);
+
+        list.innerHTML = '';
+        list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+    };
+
     const makeGif = () => {  
         const canvas = document.querySelector('.canvas');
         const captureCount = document.querySelector('.capture__count');
@@ -98,8 +122,6 @@ var myBundle = (function (exports) {
         });      
     };
 
-    const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
-
     const wordsForm = document.querySelector('.words__form');
     const coloursForm = document.querySelector('.colours__form');
     const captureGifBtn = document.querySelector('.capture__btn');
@@ -112,22 +134,6 @@ var myBundle = (function (exports) {
     let interval = '';
     let previousColor = '';
 
-    const addWordToDOMList = (newWord) => {
-        const list = document.querySelector('.words__list');
-        const newLi = document.createElement('li');
-        newLi.classList.add('words__list-item');
-        newLi.textContent = newWord;
-        list.appendChild(newLi);
-    };
-
-    const addColourToDOMList = (newColour) => {
-        const list = document.querySelector('.colours__list');
-        const newLi = document.createElement('li');
-        newLi.classList.add('colours__list-item');
-        newLi.textContent = newColour;
-        list.appendChild(newLi);
-    };
-
     const handleAddWord = (event) => {
         event.preventDefault();
 
@@ -136,9 +142,9 @@ var myBundle = (function (exports) {
         
         if (newWord.trim().length === 0) return;
 
-        words.push(newWord);
+        people.push(newWord);
 
-        addWordToDOMList(newWord);
+        preloadPeopleWords();
         clearTimeout(interval);
         generateWords();
         startCycle();
@@ -156,7 +162,7 @@ var myBundle = (function (exports) {
 
         colours.push(newColour);
 
-        addColourToDOMList(newColour);
+        preloadColourWords();
         clearTimeout(interval);
         generateBackgroundColor();
         startCycle();
@@ -268,6 +274,8 @@ var myBundle = (function (exports) {
     speedRange.addEventListener('change', handleRangeChange);
     imageCountRange.addEventListener('change', handleImageCountChange);
 
+    preloadPeopleWords();
+    preloadColourWords();
     generateWords();
     generateBackgroundColor();
     startCycle();

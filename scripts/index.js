@@ -1,7 +1,7 @@
+import { preloadPeopleWords, preloadColourWords } from './preload-words';
 import { people, places, locations } from './words';
+import colours from './colours';
 import makeGif from './make-gif';
-
-const colours = ['#4347F5', '#E77B65', '#E7658E', '#FFC300', '#65E7C6'];
 
 const wordsForm = document.querySelector('.words__form');
 const coloursForm = document.querySelector('.colours__form');
@@ -15,22 +15,6 @@ let imageCount = imageCountRange.value;
 let interval = '';
 let previousColor = '';
 
-const addWordToDOMList = (newWord) => {
-    const list = document.querySelector('.words__list');
-    const newLi = document.createElement('li');
-    newLi.classList.add('words__list-item');
-    newLi.textContent = newWord;
-    list.appendChild(newLi);
-};
-
-const addColourToDOMList = (newColour) => {
-    const list = document.querySelector('.colours__list');
-    const newLi = document.createElement('li');
-    newLi.classList.add('colours__list-item');
-    newLi.textContent = newColour;
-    list.appendChild(newLi);
-}
-
 const handleAddWord = (event) => {
     event.preventDefault();
 
@@ -39,9 +23,9 @@ const handleAddWord = (event) => {
     
     if (newWord.trim().length === 0) return;
 
-    words.push(newWord);
+    people.push(newWord);
 
-    addWordToDOMList(newWord);
+    preloadPeopleWords();
     clearTimeout(interval);
     generateWords();
     startCycle();
@@ -59,7 +43,7 @@ const handleAddColour = () => {
 
     colours.push(newColour);
 
-    addColourToDOMList(newColour);
+    preloadColourWords();
     clearTimeout(interval);
     generateBackgroundColor();
     startCycle();
@@ -171,6 +155,8 @@ captureGifBtn.addEventListener('click', makeGif);
 speedRange.addEventListener('change', handleRangeChange);
 imageCountRange.addEventListener('change', handleImageCountChange);
 
+preloadPeopleWords();
+preloadColourWords();
 generateWords();
 generateBackgroundColor();
 startCycle();
