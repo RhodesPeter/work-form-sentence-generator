@@ -20,9 +20,29 @@
                 </div>
             </div>
         </div>
-        <div class="word-generator__controls">
+        <div class="word-generator__controls" id="bottom">
             <div class="words">
-                <h1 class="words__title">Words:</h1>
+                <h1 class="words__title">Line 1 words:</h1>
+                <ul class="words__list">
+                    <!-- Loaded by JS -->
+                </ul>
+                <form class="words__form">
+                    <input class="words__input" type="text">
+                    <button type="submit" class="words__btn">Add word</button>
+                </form>
+            </div>
+            <div class="words">
+                <h1 class="words__title">Line 2 words:</h1>
+                <ul class="words__list">
+                    <!-- Loaded by JS -->
+                </ul>
+                <form class="words__form">
+                    <input class="words__input" type="text">
+                    <button type="submit" class="words__btn">Add word</button>
+                </form>
+            </div>
+            <div class="words">
+                <h1 class="words__title">Line 3 words:</h1>
                 <ul class="words__list">
                     <!-- Loaded by JS -->
                 </ul>
@@ -55,15 +75,14 @@
                 <p class="capture__render-count"></p>
                 <p class="capture__count"></p>
                 <div class="capture__acquire-wrapper">
-                    <a class="acquire-gif-link js-download-link acquire-gif-link acquire-gif-link--disabled" download="generated-sentence">Download gif</a>
-                    <a class="acquire-gif-link js-view-link acquire-gif-link--disabled" target="_self">View gif</a>
+                    <a class="acquire-gif-link js-download-link acquire-gif-link acquire-gif-link--disabled" download="generated-sentence">Download<br>gif</a>
+                    <a class="acquire-gif-link js-view-link acquire-gif-link--disabled" target="_self">View<br>gif</a>
                 </div>
                 <button class="capture__btn" type="button">Capture gif</button>
             </div>
         </div>
     <div>
     <a href="#bottom" class="hand">Controls</a>
-    <div id="bottom"></div>
     <script src="scripts/gif.worker.js"></script>
     <script src="scripts/gif.js"></script>
     <script src="build.js"></script>

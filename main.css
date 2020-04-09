@@ -19,10 +19,16 @@ html {
 
 .word-generator__controls {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     opacity: 1;
+    flex-wrap: wrap;
     animation: fade-in 0.8s;
+    overflow-x: scroll;
+}
+
+@media only screen and (min-width: 600px) {
+    .word-generator__controls {
+        flex-wrap: nowrap;
+    }
 }
 
 .canvas {
@@ -36,7 +42,19 @@ html {
     margin: 20px;
     display: flex;
     flex-direction: column;
-    width: 220px;
+    width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    .words,
+    .colours,
+    .speed,
+    .capture {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        min-width: 190px;
+    }
 }
 
 .words__title,
@@ -98,7 +116,18 @@ html {
 
 .capture {
     justify-content: flex-end;
+    position: relative;
 }
+
+/* To stop margins collapsing with overflow: scroll */
+.capture:after {
+    content: "";
+    width: 20px;
+    height: 1px;
+    position: absolute;
+    left: 100%;
+    top: 0px;
+  }
 
 /* Range control */
 .slider {
