@@ -2,10 +2,11 @@ import {
     preloadPeopleWords,
     preloadPlaceWords,
     preloadColourWords,
-    preloadLocationWords
+    preloadLocationWords,
+    preloadAllWords
 } from './preload-words';
-import { people, places, locations } from './words';
-import colours from './colours';
+import { colours, getColours, clearColours } from './colours';
+import words from './words';
 import makeGif from './make-gif';
 
 const wordForms = document.querySelectorAll('.words__form');
@@ -13,6 +14,7 @@ const coloursForm = document.querySelector('.colours__form');
 const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
+const clearWordsBtns = document.querySelectorAll('.words__clear-all');
 
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
 let imageCount = imageCountRange.value;
@@ -22,6 +24,7 @@ let previousColor = '';
 const handleAddWord = (event) => {
     event.preventDefault();
 
+    const { people, places, locations } = words;
     const form = event.target;
     const input = form.querySelector('.words__input');
     const newWord = input.value;
@@ -68,21 +71,42 @@ const handleAddColour = () => {
 const getRandomNum = array => Math.floor(Math.random() * array.length) + 0;
 
 const generateWords = () => {
-    const wordOne = document.querySelector('.result__word--1');
-    const wordTwo = document.querySelector('.result__word--2');
-    const wordThree = document.querySelector('.result__word--4');
+    const { people, places, locations } = words;
+    const newPeopleWord = people[getRandomNum(people)];
+    const newPlaceWord = places[getRandomNum(places)];
+    const newLocationWord = locations[getRandomNum(locations)];
     
-    wordOne.textContent = `${people[getRandomNum(people)]},`;
-    wordTwo.textContent = places[getRandomNum(places)];
-    wordThree.textContent = `the ${locations[getRandomNum(locations)]}`;
+    document
+        .querySelector('.result__word--1')
+        .textContent = newPeopleWord ? `${newPeopleWord},` : '';
+
+    document
+        .querySelector('.result__word--2')
+        .textContent = newPlaceWord;
+
+    document
+        .querySelector('.result__word--4')
+        .textContent = newLocationWord ? `the ${newLocationWord}` : '';
 };
 
 const generateBackgroundColor = () => {
     const resultContainer = document.querySelector('.result');
-    let nextColor = colours[getRandomNum(colours)];
+    const latestColours = getColours();
+    let nextColor = latestColours[getRandomNum(colours)];
     
+    if (latestColours.length === 1) {
+        resultContainer.style.backgroundColor = latestColours[0];
+        return;
+    }
+
+    // After colours have been cleared
+    if (!nextColor) {
+        resultContainer.style.backgroundColor = '#fff';
+        return;
+    }
+
     while (nextColor === previousColor) {
-        nextColor = colours[getRandomNum(colours)];
+        nextColor = latestColours[getRandomNum(colours)];
     }
 
     resultContainer.style.backgroundColor = nextColor;
@@ -156,16 +180,34 @@ const resetCaptureControls = () => {
     })
 }
 
-const preloadAllWords = () => {
-    preloadPeopleWords();
-    preloadColourWords();
-    preloadPlaceWords();
-    preloadLocationWords();
+const handleClearWords = (event) => {
+    const formName = event.target.closest('form').name;
+
+    if (formName === 'people') {
+        document.querySelector('.words__list--1').innerHTML = '';
+        words.people = [];
+    } else if (formName === 'places') {
+        document.querySelector('.words__list--2').innerHTML = '';
+        words.places = [];
+    } else if (formName === 'locations') {
+        document.querySelector('.words__list--3').innerHTML = '';
+        words.locations = [];
+    } else {
+        document.querySelector('.colours__list').innerHTML = '';
+        clearColours();
+    }
+
+    generateWords();
+    generateBackgroundColor();
+    clearTimeout(interval);
+    startCycle();
+    updateCanvas();
 };
 
+[...clearWordsBtns].forEach(form => form.addEventListener('click', handleClearWords));
 [...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
 coloursForm.addEventListener('submit', handleAddColour);
-captureGifBtn.addEventListener('click', makeGif);
+captureGifBtn.addEventListener('click', () => makeGif(resetCaptureControls, imageCount, imageChange));
 speedRange.addEventListener('change', handleRangeChange);
 imageCountRange.addEventListener('change', handleImageCountChange);
 

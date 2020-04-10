@@ -1,6 +1,4 @@
-import { resetCaptureControls, imageCount, imageChange } from './index';
-
-const makeGif = () => {  
+const makeGif = (resetCaptureControls, imageCount, imageChange) => {  
     const canvas = document.querySelector('.canvas');
     const captureCount = document.querySelector('.capture__count');
     const renderCount = document.querySelector('.capture__render-count');

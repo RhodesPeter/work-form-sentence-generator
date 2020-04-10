@@ -1,64 +1,64 @@
 var myBundle = (function (exports) {
     'use strict';
 
-    const people = [
-        'People',
-        'Community',
-        'Crowds',
-        'Family',
-        'Public',
-        'Citizens',
-        'Plants',
-        'Cats',
-        'Education',
-        'Culture',
-        'Detail',
-        'Typefaces',
-        'Tools',
-        'Robots',
-        'Dinosaurs',
-        'Learning'
-    ];
+    const words = {
+        people: [
+            'People',
+            'Community',
+            'Crowds',
+            'Family',
+            'Public',
+            'Citizens',
+            'Plants',
+            'Cats',
+            'Education',
+            'Culture',
+            'Detail',
+            'Typefaces',
+            'Tools',
+            'Robots',
+            'Dinosaurs',
+            'Learning'
+        ],  
+        places: [
+            'Place',
+            'Area',
+            'Research',
+            'Experiments',
+            'Printing',
+            'Hangouts',
+            'Vernacular',
+            'Process',
+            'Collaboration',
+            'Mapping',
+            'Co-design',
+            'Production',
+            'History',
+            'Archives',
+            'Photography',
+            'Typography'
+        ], 
+        locations: [
+            'Local',
+            'Park',
+            'Town',
+            'City',
+            'Village',
+            'Pub',
+            'Café',
+            'Shops',
+            'Supermarket',
+            'Studio',
+            'Workshop',
+            'Neighbourhood',
+            'Canteen',
+            'Corner',
+            'Field',
+            'Home'
+        ]
+    };
 
-    const places = [
-        'Place',
-        'Area',
-        'Research',
-        'Experiments',
-        'Printing',
-        'Hangouts',
-        'Vernacular',
-        'Process',
-        'Collaboration',
-        'Mapping',
-        'Co-design',
-        'Production',
-        'History',
-        'Archives',
-        'Photography',
-        'Typography'
-    ];
-
-    const locations = [
-        'Local',
-        'Park',
-        'Town',
-        'City',
-        'Village',
-        'Pub',
-        'Café',
-        'Shops',
-        'Supermarket',
-        'Studio',
-        'Workshop',
-        'Neighbourhood',
-        'Canteen',
-        'Corner',
-        'Field',
-        'Home'
-    ];
-
-    const colours = [
+    let colours = [
         '#4347F5',
         '#E77B65',
         '#E7658E',
@@ -66,20 +66,34 @@ var myBundle = (function (exports) {
         '#65E7C6'
     ];
 
-    const preloadWords = (listClassName, words) => {
+    const getColours = () => colours;
+
+    const clearColours = () => {
+        colours = [];
+    };
+
+    const preloadWords = (listClassName, listName) => {    
         const list = document.querySelector(listClassName);
-        const listItems = words.map(word => `<li class="word-generator__list-item">${word}</li>`);
+        const listItems = words[listName] || getColours()
+            .map(word => `<li class="word-generator__list-item">${word}</li>`);
 
         list.innerHTML = '';
         list.insertAdjacentHTML('afterbegin', listItems.join(', '));
     };
 
-    const preloadPeopleWords = () => preloadWords('.words__list--1', people);
-    const preloadPlaceWords = () => preloadWords('.words__list--2', places);
-    const preloadLocationWords = () => preloadWords('.words__list--3', locations);
-    const preloadColourWords = () => preloadWords('.colours__list', colours);
+    const preloadPeopleWords = () => preloadWords('.words__list--1', 'people');
+    const preloadPlaceWords = () => preloadWords('.words__list--2', 'places');
+    const preloadLocationWords = () => preloadWords('.words__list--3', 'locations');
+    const preloadColourWords = () => preloadWords('.colours__list', 'colours');
 
-    const makeGif = () => {  
+    const preloadAllWords = () => {
+        preloadPeopleWords();
+        preloadColourWords();
+        preloadPlaceWords();
+        preloadLocationWords();
+    };
+
+    const makeGif = (resetCaptureControls, imageCount, imageChange) => {  
         const canvas = document.querySelector('.canvas');
         const captureCount = document.querySelector('.capture__count');
         const renderCount = document.querySelector('.capture__render-count');
@@ -92,14 +106,14 @@ var myBundle = (function (exports) {
 
         resetCaptureControls();
 
-        for(let i = 0; i < exports.imageCount; i++){
+        for(let i = 0; i < imageCount; i++){
             setTimeout(() => {
-                gif.addFrame(canvas, {delay: exports.imageChange, copy: true});
+                gif.addFrame(canvas, {delay: imageChange, copy: true});
                 captureCount.textContent = `Frames captured: ${i + 1}`;
-            }, i * exports.imageChange);
+            }, i * imageChange);
         }
 
-        setTimeout(() => gif.render(), exports.imageChange * exports.imageCount);
+        setTimeout(() => gif.render(), imageChange * imageCount);
 
         // This is the progress of turning it into a gif after gif.render()
         gif.on('progress', function(p) {
@@ -124,6 +138,7 @@ var myBundle = (function (exports) {
     const captureGifBtn = document.querySelector('.capture__btn');
     const speedRange = document.querySelector('.slider--speed');
     const imageCountRange = document.querySelector('.slider--image-count');
+    const clearWordsBtns = document.querySelectorAll('.words__clear-all');
 
     exports.imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
     exports.imageCount = imageCountRange.value;
@@ -133,6 +148,7 @@ var myBundle = (function (exports) {
     const handleAddWord = (event) => {
         event.preventDefault();
 
+        const { people, places, locations } = words;
         const form = event.target;
         const input = form.querySelector('.words__input');
         const newWord = input.value;
@@ -179,21 +195,42 @@ var myBundle = (function (exports) {
     const getRandomNum = array => Math.floor(Math.random() * array.length) + 0;
 
     const generateWords = () => {
-        const wordOne = document.querySelector('.result__word--1');
-        const wordTwo = document.querySelector('.result__word--2');
-        const wordThree = document.querySelector('.result__word--4');
+        const { people, places, locations } = words;
+        const newPeopleWord = people[getRandomNum(people)];
+        const newPlaceWord = places[getRandomNum(places)];
+        const newLocationWord = locations[getRandomNum(locations)];
         
-        wordOne.textContent = `${people[getRandomNum(people)]},`;
-        wordTwo.textContent = places[getRandomNum(places)];
-        wordThree.textContent = `the ${locations[getRandomNum(locations)]}`;
+        document
+            .querySelector('.result__word--1')
+            .textContent = newPeopleWord ? `${newPeopleWord},` : '';
+
+        document
+            .querySelector('.result__word--2')
+            .textContent = newPlaceWord;
+
+        document
+            .querySelector('.result__word--4')
+            .textContent = newLocationWord ? `the ${newLocationWord}` : '';
     };
 
     const generateBackgroundColor = () => {
         const resultContainer = document.querySelector('.result');
-        let nextColor = colours[getRandomNum(colours)];
+        const latestColours = getColours();
+        let nextColor = latestColours[getRandomNum(colours)];
         
+        if (latestColours.length === 1) {
+            resultContainer.style.backgroundColor = latestColours[0];
+            return;
+        }
+
+        // After colours have been cleared
+        if (!nextColor) {
+            resultContainer.style.backgroundColor = '#fff';
+            return;
+        }
+
         while (nextColor === previousColor) {
-            nextColor = colours[getRandomNum(colours)];
+            nextColor = latestColours[getRandomNum(colours)];
         }
 
         resultContainer.style.backgroundColor = nextColor;
@@ -267,16 +304,34 @@ var myBundle = (function (exports) {
         });
     };
 
-    const preloadAllWords = () => {
-        preloadPeopleWords();
-        preloadColourWords();
-        preloadPlaceWords();
-        preloadLocationWords();
+    const handleClearWords = (event) => {
+        const formName = event.target.closest('form').name;
+
+        if (formName === 'people') {
+            document.querySelector('.words__list--1').innerHTML = '';
+            words.people = [];
+        } else if (formName === 'places') {
+            document.querySelector('.words__list--2').innerHTML = '';
+            words.places = [];
+        } else if (formName === 'locations') {
+            document.querySelector('.words__list--3').innerHTML = '';
+            words.locations = [];
+        } else {
+            document.querySelector('.colours__list').innerHTML = '';
+            clearColours();
+        }
+
+        generateWords();
+        generateBackgroundColor();
+        clearTimeout(interval);
+        startCycle();
+        updateCanvas();
     };
 
+    [...clearWordsBtns].forEach(form => form.addEventListener('click', handleClearWords));
     [...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
     coloursForm.addEventListener('submit', handleAddColour);
-    captureGifBtn.addEventListener('click', makeGif);
+    captureGifBtn.addEventListener('click', () => makeGif(resetCaptureControls, exports.imageCount, exports.imageChange));
     speedRange.addEventListener('change', handleRangeChange);
     imageCountRange.addEventListener('change', handleImageCountChange);
 

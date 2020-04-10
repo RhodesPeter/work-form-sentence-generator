@@ -35,6 +35,10 @@ html {
     display: none;
 }
 
+.result__word {
+    word-break: break-all;
+}
+
 .words,
 .colours,
 .speed,
@@ -53,7 +57,7 @@ html {
         margin: 20px;
         display: flex;
         flex-direction: column;
-        min-width: 190px;
+        min-width: 200px;
     }
 }
 
@@ -69,6 +73,7 @@ html {
     list-style-position: inside;
     font-size: 14px;
     display: inline-block;
+    word-break: break-word;
 }
 
 .words__input,
@@ -78,6 +83,10 @@ html {
     width: 100%;
     padding: 4px;
     border: 2px solid #4347F5;
+}
+
+.words__list {
+    word-break: break-all;
 }
 
 .words__form,
@@ -95,6 +104,29 @@ html {
     border: 0;
     background-color: #4347F5;
     font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.words__btn:hover,
+.colours__btn:hover,
+.capture__btn:hover,
+.acquire-gif-link:hover {
+    cursor: pointer;
+    background-color: #5955d8;
+}
+
+.words__clear-all {
+    color: #4347F5;
+    border: 0;
+    background-color: white;
+    font-size: 14px;
+    border-bottom: 2px solid #4347F5;
+    transition: border-color 0.3s;
+}
+
+.words__clear-all:hover {
+    cursor: pointer;
+    border-color: #65E7C6;
 }
 
 .acquire-gif-link {
