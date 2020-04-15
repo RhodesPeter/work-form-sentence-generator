@@ -36,7 +36,7 @@ html {
 }
 
 .result__word {
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .words,
@@ -126,7 +126,7 @@ html {
 
 .words__clear-all:hover {
     cursor: pointer;
-    border-color: #65E7C6;
+    border-color: #FFC300;
 }
 
 .acquire-gif-link {
