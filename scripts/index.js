@@ -89,6 +89,17 @@ const generateWords = () => {
         .textContent = newLocationWord ? `the ${newLocationWord}` : '';
 };
 
+// Should changing the checkboxes automatically restart the cycle
+const generateFont = () => {
+    const activeFonts = [...document.querySelectorAll('.fonts__input:checked')];
+    
+    document
+        .querySelectorAll('.result__word')
+        .forEach(result => {
+            result.style.fontFamily = activeFonts[getRandomNum(activeFonts)].value;
+        });
+};
+
 const generateBackgroundColor = () => {
     const resultContainer = document.querySelector('.result');
     const latestColours = getColours();
@@ -117,6 +128,7 @@ const startCycle = () => {
     interval = setInterval(() => {
         generateWords();
         generateBackgroundColor();
+        generateFont();
         updateCanvas();
     }, imageChange);
 };
@@ -199,6 +211,7 @@ const handleClearWords = (event) => {
 
     generateWords();
     generateBackgroundColor();
+    generateFont();
     clearTimeout(interval);
     startCycle();
     updateCanvas();
@@ -214,6 +227,7 @@ imageCountRange.addEventListener('change', handleImageCountChange);
 preloadAllWords();
 generateWords();
 generateBackgroundColor();
+generateFont();
 startCycle();
 updateCanvas();
 

@@ -74,11 +74,20 @@ var myBundle = (function (exports) {
 
     const preloadWords = (listClassName, listName) => {    
         const list = document.querySelector(listClassName);
-        const listItems = words[listName] || getColours()
-            .map(word => `<li class="word-generator__list-item">${word}</li>`);
+        let listItems = [];
+
+        if (listName === 'colours') {
+            listItems = getColours();
+        } else {
+            listItems = words[listName];
+        }
+
+        const listItemsHTML = listItems
+            .map(word => `<li class="word-generator__list-item">${word}</li>`)
+            .join(', ');
 
         list.innerHTML = '';
-        list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+        list.insertAdjacentHTML('afterbegin', listItemsHTML);
     };
 
     const preloadPeopleWords = () => preloadWords('.words__list--1', 'people');
@@ -213,6 +222,17 @@ var myBundle = (function (exports) {
             .textContent = newLocationWord ? `the ${newLocationWord}` : '';
     };
 
+    // Should changing the checkboxes automatically restart the cycle
+    const generateFont = () => {
+        const activeFonts = [...document.querySelectorAll('.fonts__input:checked')];
+        
+        document
+            .querySelectorAll('.result__word')
+            .forEach(result => {
+                result.style.fontFamily = activeFonts[getRandomNum(activeFonts)].value;
+            });
+    };
+
     const generateBackgroundColor = () => {
         const resultContainer = document.querySelector('.result');
         const latestColours = getColours();
@@ -241,6 +261,7 @@ var myBundle = (function (exports) {
         interval = setInterval(() => {
             generateWords();
             generateBackgroundColor();
+            generateFont();
             updateCanvas();
         }, exports.imageChange);
     };
@@ -323,6 +344,7 @@ var myBundle = (function (exports) {
 
         generateWords();
         generateBackgroundColor();
+        generateFont();
         clearTimeout(interval);
         startCycle();
         updateCanvas();
@@ -338,6 +360,7 @@ var myBundle = (function (exports) {
     preloadAllWords();
     generateWords();
     generateBackgroundColor();
+    generateFont();
     startCycle();
     updateCanvas();
 

@@ -1,13 +1,23 @@
 import words from './words';
+import { getFonts } from './fonts';
 import { getColours } from './colours';
 
 const preloadWords = (listClassName, listName) => {    
     const list = document.querySelector(listClassName);
-    const listItems = words[listName] || getColours()
-        .map(word => `<li class="word-generator__list-item">${word}</li>`);
+    let listItems = [];
+
+    if (listName === 'colours') {
+        listItems = getColours();
+    } else {
+        listItems = words[listName];
+    }
+
+    const listItemsHTML = listItems
+        .map(word => `<li class="word-generator__list-item">${word}</li>`)
+        .join(', ');
 
     list.innerHTML = '';
-    list.insertAdjacentHTML('afterbegin', listItems.join(', '));
+    list.insertAdjacentHTML('afterbegin', listItemsHTML);
 };
 
 const preloadPeopleWords = () => preloadWords('.words__list--1', 'people');

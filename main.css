@@ -42,7 +42,8 @@ html {
 .words,
 .colours,
 .speed,
-.capture {
+.capture,
+.fonts {
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -53,7 +54,8 @@ html {
     .words,
     .colours,
     .speed,
-    .capture {
+    .capture,
+    .fonts {
         margin: 20px;
         display: flex;
         flex-direction: column;
@@ -64,7 +66,8 @@ html {
 .words__title,
 .colours__title,
 .speed__title,
-.image-count__title {
+.image-count__title,
+.fonts__title {
     font-size: 22px;
     margin-bottom: 8px;
 }
@@ -249,6 +252,68 @@ html {
     }
 }
 
+.fonts__checkbox-wrapper {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.fonts__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.fonts__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+
+/* On mouse-over, add a grey background color */
+.fonts__checkbox-wrapper:hover input ~ .fonts__checkmark {
+    background-color: #ccc;
+}
+  
+/* When the checkbox is checked, add a blue background */
+.fonts__input:checked ~ .fonts__checkmark {
+    background-color: #2e32ec;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.fonts__checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.fonts__input:checked ~ .fonts__checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.fonts__checkbox-wrapper .fonts__checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
 @keyframes fade-in {
     0%   { opacity: 0; }
     100% { opacity: 1; }
@@ -257,4 +322,9 @@ html {
 @font-face {
     font-family: apercu;
     src: url(fonts/apercu_regular_pro.otf);
-  }
+}
+
+@font-face {
+    font-family: sheppySans;
+    src: url(fonts/SheppySanstest-Regular.otf);
+}
