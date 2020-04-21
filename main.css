@@ -259,8 +259,8 @@ html {
 .fonts__checkbox-wrapper {
     display: block;
     position: relative;
-    padding-left: 30px;
-    margin-bottom: 8px;
+    padding-left: 26px;
+    margin-bottom: 4px;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
@@ -278,8 +278,8 @@ html {
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
-    width: 20px;
+    height: 17px;
+    width: 17px;
     background-color: #eee;
   }
 
@@ -307,12 +307,12 @@ html {
 
 /* Style the checkmark/indicator */
 .fonts__checkbox-wrapper .fonts__checkmark:after {
-    left: 7px;
+    left: 6px;
     top: 3px;
-    width: 4px;
-    height: 9px;
+    width: 3px;
+    height: 7px;
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
