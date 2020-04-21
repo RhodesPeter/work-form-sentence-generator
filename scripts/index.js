@@ -8,7 +8,8 @@ import {
 import { colours, getColours, clearColours } from './colours';
 import words from './words';
 import makeGif from './make-gif';
-import fonts from './fonts';
+import generateFont from './generate-font';
+import getRandomNum from './get-random-num';
 
 const wordForms = document.querySelectorAll('.words__form');
 const coloursForm = document.querySelector('.colours__form');
@@ -70,8 +71,6 @@ const handleAddColour = () => {
     input.value = '';
 }
 
-const getRandomNum = array => Math.floor(Math.random() * array.length) + 0;
-
 const generateWords = () => {
     const { people, places, locations } = words;
     const newPeopleWord = people[getRandomNum(people)];
@@ -89,24 +88,6 @@ const generateWords = () => {
     document
         .querySelector('.result__word--4')
         .textContent = newLocationWord ? `the ${newLocationWord}` : '';
-};
-
-// Should changing the checkboxes automatically restart the cycle
-const generateFont = () => {
-    const activeFonts = [...document.querySelectorAll('.fonts__input:checked')];
-    
-    document
-        .querySelectorAll('.result__word')
-        .forEach(result => {
-            const randomColour = activeFonts[getRandomNum(activeFonts)];
-            result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
-
-            if (randomColour && fonts[randomColour.value].caseLimitedTo) {
-                result.style.textTransform = 'uppercase';
-            } else {
-                result.style.textTransform = 'none';
-            }
-        });
 };
 
 const generateBackgroundColor = () => {

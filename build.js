@@ -143,6 +143,10 @@ var myBundle = (function (exports) {
         });      
     };
 
+    const getRandomNum = (array) => {
+        return Math.floor(Math.random() * array.length) + 0;
+    };
+
     const fonts = {
         'sheppySans': { 
             caseLimitedTo: 'upperCase'
@@ -177,6 +181,23 @@ var myBundle = (function (exports) {
         'WorkSlab': { 
             caseLimitedTo: null
         }
+    };
+
+    const generateFont = () => {
+        const activeFonts = [...document.querySelectorAll('.fonts__input:checked')];
+        
+        document
+            .querySelectorAll('.result__word')
+            .forEach(result => {
+                const randomColour = activeFonts[getRandomNum(activeFonts)];
+                result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
+
+                if (randomColour && fonts[randomColour.value].caseLimitedTo) {
+                    result.style.textTransform = 'uppercase';
+                } else {
+                    result.style.textTransform = 'none';
+                }
+            });
     };
 
     const wordForms = document.querySelectorAll('.words__form');
@@ -239,8 +260,6 @@ var myBundle = (function (exports) {
         input.value = '';
     };
 
-    const getRandomNum = array => Math.floor(Math.random() * array.length) + 0;
-
     const generateWords = () => {
         const { people, places, locations } = words;
         const newPeopleWord = people[getRandomNum(people)];
@@ -258,24 +277,6 @@ var myBundle = (function (exports) {
         document
             .querySelector('.result__word--4')
             .textContent = newLocationWord ? `the ${newLocationWord}` : '';
-    };
-
-    // Should changing the checkboxes automatically restart the cycle
-    const generateFont = () => {
-        const activeFonts = [...document.querySelectorAll('.fonts__input:checked')];
-        
-        document
-            .querySelectorAll('.result__word')
-            .forEach(result => {
-                const randomColour = activeFonts[getRandomNum(activeFonts)];
-                result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
-
-                if (randomColour && fonts[randomColour.value].caseLimitedTo) {
-                    result.style.textTransform = 'uppercase';
-                } else {
-                    result.style.textTransform = 'none';
-                }
-            });
     };
 
     const generateBackgroundColor = () => {
