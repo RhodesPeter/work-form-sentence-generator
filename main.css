@@ -35,6 +35,10 @@ html {
     display: none;
 }
 
+.results__word-wrapper {
+    height: 40%;
+}
+
 .result__word {
     word-break: break-word;
 }
@@ -312,6 +316,58 @@ html {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.visually-hidden { 
+    position: absolute !important;
+    height: 1px; 
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.preload__apercu {
+    font-family: apercu;
+}
+
+.preload__sheppySans {
+    font-family: sheppySans;
+}
+
+.preload__airSpace {
+    font-family: airSpace;
+}
+
+.preload__jonesMono {
+    font-family: jonesMono;
+}
+
+.preload__LisbonRuha {
+    font-family: LisbonRuha;
+}
+
+.preload__LooseFit {
+    font-family: LooseFit;
+}
+
+.preload__PascalDisplay {
+    font-family: PascalDisplay;
+}
+
+.preload__SelavyCross {
+    font-family: SelavyCross;
+}
+
+.preload__WorkFormStandard {
+    font-family: WorkFormStandard;
+}
+
+.preload__WorkCurvy {
+    font-family: WorkCurvy;
+}
+
+.preload__WorkSlab {
+    font-family: WorkSlab;
 }
 
 @keyframes fade-in {
