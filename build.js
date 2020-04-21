@@ -272,6 +272,8 @@ var myBundle = (function (exports) {
 
                 if (randomColour && fonts[randomColour.value].caseLimitedTo) {
                     result.style.textTransform = 'uppercase';
+                } else {
+                    result.style.textTransform = 'none';
                 }
             });
     };
