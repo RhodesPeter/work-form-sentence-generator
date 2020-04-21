@@ -3,7 +3,8 @@ let colours = [
     '#E77B65',
     '#E7658E',
     '#FFC300',
-    '#65E7C6'
+    '#65E7C6',
+    '#85C3DA'
 ];
 
 const getColours = () => colours;

@@ -63,7 +63,8 @@ var myBundle = (function (exports) {
         '#E77B65',
         '#E7658E',
         '#FFC300',
-        '#65E7C6'
+        '#65E7C6',
+        '#85C3DA'
     ];
 
     const getColours = () => colours;
@@ -142,12 +143,49 @@ var myBundle = (function (exports) {
         });      
     };
 
+    const fonts = {
+        'sheppySans': { 
+            caseLimitedTo: 'upperCase'
+        },
+        'airSpace': { 
+            caseLimitedTo: null
+        },
+        'apercu': { 
+            caseLimitedTo: null
+        },
+        'jonesMono': { 
+            caseLimitedTo: null
+        },
+        'LisbonRuha': { 
+            caseLimitedTo: 'upperCase' 
+        },
+        'LooseFit': { 
+            caseLimitedTo: 'upperCase' 
+        },
+        'PascalDisplay': { 
+            caseLimitedTo: null
+        },
+        'SelavyCross': { 
+            caseLimitedTo: null
+        },
+        'WorkFormStandard': { 
+            caseLimitedTo: null
+        },
+        'WorkCurvy': { 
+            caseLimitedTo: null
+        },
+        'WorkSlab': { 
+            caseLimitedTo: null
+        }
+    };
+
     const wordForms = document.querySelectorAll('.words__form');
     const coloursForm = document.querySelector('.colours__form');
     const captureGifBtn = document.querySelector('.capture__btn');
     const speedRange = document.querySelector('.slider--speed');
     const imageCountRange = document.querySelector('.slider--image-count');
     const clearWordsBtns = document.querySelectorAll('.words__clear-all');
+    const fontsForm = document.querySelector('.fonts__form');
 
     exports.imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
     exports.imageCount = imageCountRange.value;
@@ -229,7 +267,12 @@ var myBundle = (function (exports) {
         document
             .querySelectorAll('.result__word')
             .forEach(result => {
-                result.style.fontFamily = activeFonts[getRandomNum(activeFonts)].value;
+                const randomColour = activeFonts[getRandomNum(activeFonts)];
+                result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
+
+                if (randomColour && fonts[randomColour.value].caseLimitedTo) {
+                    result.style.textTransform = 'uppercase';
+                }
             });
     };
 
@@ -350,12 +393,19 @@ var myBundle = (function (exports) {
         updateCanvas();
     };
 
+    const handleFontFormChange = () => {
+        clearTimeout(interval);
+        generateFont();
+        startCycle();
+    };
+
     [...clearWordsBtns].forEach(form => form.addEventListener('click', handleClearWords));
     [...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
     coloursForm.addEventListener('submit', handleAddColour);
     captureGifBtn.addEventListener('click', () => makeGif(resetCaptureControls, exports.imageCount, exports.imageChange));
     speedRange.addEventListener('change', handleRangeChange);
     imageCountRange.addEventListener('change', handleImageCountChange);
+    fontsForm.addEventListener('change', handleFontFormChange);
 
     preloadAllWords();
     generateWords();

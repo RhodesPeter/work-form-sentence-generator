@@ -1,5 +1,4 @@
 import words from './words';
-import { getFonts } from './fonts';
 import { getColours } from './colours';
 
 const preloadWords = (listClassName, listName) => {    

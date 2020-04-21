@@ -255,8 +255,8 @@ html {
 .fonts__checkbox-wrapper {
     display: block;
     position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
+    padding-left: 30px;
+    margin-bottom: 8px;
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
@@ -274,8 +274,8 @@ html {
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
     background-color: #eee;
   }
 
@@ -303,10 +303,10 @@ html {
 
 /* Style the checkmark/indicator */
 .fonts__checkbox-wrapper .fonts__checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
+    left: 7px;
+    top: 3px;
+    width: 4px;
+    height: 9px;
     border: solid white;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
@@ -327,4 +327,49 @@ html {
 @font-face {
     font-family: sheppySans;
     src: url(fonts/SheppySanstest-Regular.otf);
+}
+
+@font-face {
+    font-family: airSpace;
+    src: url(fonts/Airspace_Skeleton-Medium.ttf);
+}
+
+@font-face {
+    font-family: jonesMono;
+    src: url(fonts/Jones_mono_test-Regular.otf);
+}
+
+@font-face {
+    font-family: LisbonRuha;
+    src: url(fonts/Lisbon_Ruha_revised-Regular.otf);
+}
+
+@font-face {
+    font-family: LooseFit;
+    src: url(fonts/LooseFit-Regular.otf);
+}
+
+@font-face {
+    font-family: PascalDisplay;
+    src: url(fonts/Pascal-Display.otf);
+}
+
+@font-face {
+    font-family: SelavyCross;
+    src: url(fonts/Selavy-CrossBoldAngleTwo.otf);
+}
+
+@font-face {
+    font-family: WorkFormStandard;
+    src: url(fonts/work-formStandard-Italic.otf);
+}
+
+@font-face {
+    font-family: WorkCurvy;
+    src: url(fonts/WorkCurvy-Regular.ttf);
+}
+
+@font-face {
+    font-family: WorkSlab;
+    src: url(fonts/WorkSlab.otf);
 }

@@ -8,6 +8,7 @@ import {
 import { colours, getColours, clearColours } from './colours';
 import words from './words';
 import makeGif from './make-gif';
+import fonts from './fonts';
 
 const wordForms = document.querySelectorAll('.words__form');
 const coloursForm = document.querySelector('.colours__form');
@@ -15,6 +16,7 @@ const captureGifBtn = document.querySelector('.capture__btn');
 const speedRange = document.querySelector('.slider--speed');
 const imageCountRange = document.querySelector('.slider--image-count');
 const clearWordsBtns = document.querySelectorAll('.words__clear-all');
+const fontsForm = document.querySelector('.fonts__form');
 
 let imageChange = speedRange.value; // 2000 milliseconds default (2 seconds)
 let imageCount = imageCountRange.value;
@@ -96,7 +98,12 @@ const generateFont = () => {
     document
         .querySelectorAll('.result__word')
         .forEach(result => {
-            result.style.fontFamily = activeFonts[getRandomNum(activeFonts)].value;
+            const randomColour = activeFonts[getRandomNum(activeFonts)];
+            result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
+
+            if (randomColour && fonts[randomColour.value].caseLimitedTo) {
+                result.style.textTransform = 'uppercase';
+            }
         });
 };
 
@@ -217,12 +224,19 @@ const handleClearWords = (event) => {
     updateCanvas();
 };
 
+const handleFontFormChange = () => {
+    clearTimeout(interval);
+    generateFont();
+    startCycle();
+}
+
 [...clearWordsBtns].forEach(form => form.addEventListener('click', handleClearWords));
 [...wordForms].forEach(form => form.addEventListener('submit', handleAddWord));
 coloursForm.addEventListener('submit', handleAddColour);
 captureGifBtn.addEventListener('click', () => makeGif(resetCaptureControls, imageCount, imageChange));
 speedRange.addEventListener('change', handleRangeChange);
 imageCountRange.addEventListener('change', handleImageCountChange);
+fontsForm.addEventListener('change', handleFontFormChange);
 
 preloadAllWords();
 generateWords();
