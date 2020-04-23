@@ -10,15 +10,11 @@ import base64WorkSlab from './base-64-fonts.js/work-slab';
 
 const updateCanvas = () => {
     const resultWrapper = document.querySelector('.result-wrapper');
-    const result = document.querySelector('.result');
     const canvas = document.querySelector('.canvas');
     const ctx = canvas.getContext('2d');
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    result.style.height = '100vh';
-    result.style.width = '100vw';
 
     // To add custom fonts to an svg they have to be base64 encoded.
     // Apercu added as backup font as not all fonts have ampersands.
