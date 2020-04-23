@@ -21,6 +21,11 @@ const updateCanvas = () => {
     const data = `
         <svg xmlns="http://www.w3.org/2000/svg">
             <style>
+                * {
+                    box-sizing: border-box;
+                    padding: 0;
+                    margin: 0;
+                }
                 @font-face { font-family: 'apercu'; src: url(${base64Apercu}) format('truetype'); }
                 @font-face { font-family: 'sheppySans'; src: url(${base64Sheppy}) format('truetype'); }
                 @font-face { font-family: 'airSpace'; src: url(${base64Airspace}) format('truetype'); }

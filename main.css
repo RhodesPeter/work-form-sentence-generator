@@ -35,14 +35,6 @@ html {
     display: none;
 }
 
-.results__word-wrapper {
-    height: 48%;
-}
-
-.result__word {
-    word-break: break-word;
-}
-
 .words,
 .colours,
 .speed,
@@ -177,8 +169,12 @@ html {
     outline: none;
 }
 
+.slider:focus::-webkit-slider-thumb{
+    background: #0f117a;
+}
+
 .slider::-webkit-slider-thumb:hover {
-    background: #2e32ec;
+    background: #0f117a;
     -webkit-transition: .2s;
     transition: background .2s;
 }
@@ -197,7 +193,7 @@ html {
     width: 17px;
     height: 17px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: #4347F5;
     cursor: pointer;
 }
 
@@ -281,6 +277,7 @@ html {
     height: 17px;
     width: 17px;
     background-color: #eee;
+    transition: background-color 0.3s;
   }
 
 /* On mouse-over, add a grey background color */
@@ -291,6 +288,10 @@ html {
 /* When the checkbox is checked, add a blue background */
 .fonts__input:checked ~ .fonts__checkmark {
     background-color: #2e32ec;
+}
+
+.fonts__input:focus ~ .fonts__checkmark {
+    background-color: #ccc;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

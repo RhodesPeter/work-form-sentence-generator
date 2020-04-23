@@ -227,6 +227,11 @@ var myBundle = (function (exports) {
         const data = `
         <svg xmlns="http://www.w3.org/2000/svg">
             <style>
+                * {
+                    box-sizing: border-box;
+                    padding: 0;
+                    margin: 0;
+                }
                 @font-face { font-family: 'apercu'; src: url(${base64Apercu}) format('truetype'); }
                 @font-face { font-family: 'sheppySans'; src: url(${sheppy}) format('truetype'); }
                 @font-face { font-family: 'airSpace'; src: url(${airspace}) format('truetype'); }
