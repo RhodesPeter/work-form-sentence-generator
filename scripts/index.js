@@ -10,6 +10,7 @@ import words from './words';
 import makeGif from './make-gif';
 import generateFont from './generate-font';
 import getRandomNum from './get-random-num';
+import updateCanvas from './update-canvas';
 
 const wordForms = document.querySelectorAll('.words__form');
 const coloursForm = document.querySelector('.colours__form');
@@ -141,34 +142,6 @@ const handleImageCountChange = (event) => {
     imageCountText.textContent = `${imageCountValue} image${imageCountValue === '1' ? '' : 's'}`;
 };
 
-const updateCanvas = () => {
-    const resultWrapper = document.querySelector('.result-wrapper');
-    const result = document.querySelector('.result');
-    const canvas = document.querySelector('.canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    result.style.height = '100vh';
-    result.style.width = '100vw';
-
-    const data = `
-        <svg xmlns="http://www.w3.org/2000/svg">
-            <foreignObject width="100%" height="100%">
-                <div xmlns="http://www.w3.org/1999/xhtml">
-                    ${resultWrapper.innerHTML}
-                </div>
-            </foreignObject>
-        </svg>
-    `;
-
-    const tempImg = document.createElement('img')
-    tempImg.src = 'data:image/svg+xml,' + encodeURIComponent(data);
-    
-    tempImg.addEventListener('load', e => ctx.drawImage(e.target, 0, 0))
-}
-
 const resetCaptureControls = () => {
     const captureCount = document.querySelector('.capture__count');
     const renderCount = document.querySelector('.capture__render-count');
@@ -203,8 +176,8 @@ const handleClearWords = (event) => {
     generateBackgroundColor();
     generateFont();
     clearTimeout(interval);
-    startCycle();
     updateCanvas();
+    startCycle();
 };
 
 const handleFontFormChange = () => {

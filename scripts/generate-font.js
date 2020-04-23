@@ -8,7 +8,9 @@ const generateFont = () => {
         .querySelectorAll('.result__word')
         .forEach(result => {
             const randomColour = activeFonts[getRandomNum(activeFonts)];
-            result.style.fontFamily = randomColour ? randomColour.value : 'apercu';
+
+            // apercu added as a backup as not all fonts have ampersands.
+            result.style.fontFamily = randomColour ? `${randomColour.value}, apercu` : 'apercu';
 
             if (randomColour && fonts[randomColour.value].caseLimitedTo) {
                 result.style.textTransform = 'uppercase';

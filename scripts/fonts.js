@@ -11,14 +11,8 @@ const fonts = {
     'jonesMono': { 
         caseLimitedTo: null
     },
-    'LisbonRuha': { 
-        caseLimitedTo: 'upperCase' 
-    },
     'LooseFit': { 
         caseLimitedTo: 'upperCase' 
-    },
-    'PascalDisplay': { 
-        caseLimitedTo: null
     },
     'SelavyCross': { 
         caseLimitedTo: null
