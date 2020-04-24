@@ -1,6 +1,6 @@
 const fonts = {
     'sheppySans': { 
-        caseLimitedTo: 'upperCase'
+        caseLimitedTo: 'uppercase'
     },
     'airSpace': { 
         caseLimitedTo: null
@@ -12,7 +12,7 @@ const fonts = {
         caseLimitedTo: null
     },
     'LooseFit': { 
-        caseLimitedTo: 'upperCase' 
+        caseLimitedTo: 'uppercase' 
     },
     'SelavyCross': { 
         caseLimitedTo: null

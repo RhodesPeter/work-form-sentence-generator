@@ -291,7 +291,9 @@ html {
 }
 
 .fonts__input:focus ~ .fonts__checkmark {
-    background-color: #ccc;
+    /* background-color: #ccc; */
+    outline: 1px solid #aeafe4;
+    outline-offset: 1px;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
